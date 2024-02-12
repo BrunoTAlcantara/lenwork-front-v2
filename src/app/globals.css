@@ -15,6 +15,17 @@
     --background-end-rgb: 0, 0, 0;
   }
 }
+@variants visible {
+  .visible {
+    @apply opacity-100;
+  }
+}
+
+@variants invisible {
+  .invisible {
+    @apply opacity-0;
+  }
+}
 
 body {
   color: rgb(var(--foreground-rgb));

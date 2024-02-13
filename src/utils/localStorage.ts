@@ -19,7 +19,6 @@ export function saveUserLocalStorage(user: UserProps): {
         message: "Já existe um usuário com o mesmo CPF ou e-mail",
       };
     }
-
     const now = new Date();
     const userWithId = {
       ...user,

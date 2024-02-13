@@ -9,6 +9,7 @@ function useStorage() {
 
   useEffect(() => {
     const storedUsers = getAllUsers();
+    console.log("aLL USERS", storedUsers);
     setUsers(storedUsers);
   }, [isLoading]);
 

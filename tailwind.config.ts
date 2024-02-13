@@ -7,16 +7,22 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+
     extend: {
       colors: {
         primary: "#40c8f4",
-        sucess: "#22C461",
+        success: "#22C461",
         danger: "#E7484B",
       },
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      backgroundColor: {
+        default: "#ffffff", // Defina a cor de fundo padrão como branco
       },
     },
   },

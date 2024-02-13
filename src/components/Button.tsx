@@ -1,6 +1,7 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { twMerge } from "tailwind-merge";
 import { cva, type VariantProps } from "class-variance-authority";
+import { LoadingSpinner } from "./Spinner";
 
 const button = cva(
   [
@@ -13,6 +14,7 @@ const button = cva(
     "focus-visible:ring-4",
     "transition-all",
     "rounded-lg",
+
     "ring-red-300",
     "disabled:cursor-not-allowed",
   ],
@@ -22,8 +24,10 @@ const button = cva(
         primary: [
           "bg-primary",
           "text-white",
+          "flex-shrink-0",
           "hover:bg-primary/70",
           "active:bg-primary-700",
+          "rounded-full",
           "focus-visible:bg-primary-600",
           "disabled:bg-[#f6f6f6]",
           "disabled:text-[#dddcdc]",
@@ -38,6 +42,14 @@ const button = cva(
           "disabled:bg-theme-base",
           "disabled:border-theme-200",
           "disabled:text-theme-400",
+        ],
+        link: [
+          "text-black",
+          "hover:text-black-700",
+          "active:text-black-800",
+          "focus-visible:text-black-600",
+          "border-none",
+          "disabled:text-[#dddcdc]",
         ],
 
         danger: [
@@ -60,10 +72,10 @@ const button = cva(
         ],
       },
       size: {
-        sm: ["text-sm", "py-1.5", "min-h-9", "px-3"],
-        md: ["text-sm", "py-2", "min-h-10", "px-5"],
-        lg: ["text-md", "py-2.5", "min-h-11", "px-5"],
-        xl: ["text-md", "py-3", "min-h-12", "px-6"],
+        sm: ["text-sm", "py-1.5", "min-h-9", "px-3", "w-20"],
+        md: ["text-sm", "py-2", "min-h-10", "px-5", "w-28"],
+        lg: ["text-md", "py-2.5", "min-h-11", "px-5", "w-36"],
+        xl: ["text-md", "py-3", "min-h-12", "px-28", "w-64"],
       },
       btnType: {
         button: "",
@@ -86,17 +98,22 @@ const button = cva(
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof button> {}
+    VariantProps<typeof button> {
+  loading?: boolean;
+}
 
 export const Button: React.FC<ButtonProps> = ({
   className,
   variant,
   size,
+  loading,
   btnType,
   ...props
 }) => (
   <button
     className={twMerge(button({ variant, size, btnType, className }))}
     {...props}
-  />
+  >
+    {loading ? <LoadingSpinner /> : props.children}
+  </button>
 );

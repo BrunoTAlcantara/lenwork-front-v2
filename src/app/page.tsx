@@ -1,6 +1,48 @@
+"use client";
+import { Button } from "@/components/Button";
+import Field from "@/components/Field";
+import Icon from "@/components/Icon";
+import { normalizeCpfNumber, normalizePhoneNumber } from "@/utils/masks";
+import { UserSchema } from "@/utils/shemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ArrowRight } from "lucide-react";
+
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useForm, FieldValues } from "react-hook-form";
 
 export default function Home() {
+  const {
+    watch,
+    register,
+    handleSubmit,
+    setValue,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FieldValues>({
+    resolver: zodResolver(UserSchema),
+  });
+
+  const router = useRouter();
+
+  const phoneValue = watch("telefone");
+  const cpfValue = watch("cpf");
+
+  useEffect(() => {
+    setValue("telefone", normalizePhoneNumber(phoneValue));
+  }, [phoneValue, setValue]);
+
+  useEffect(() => {
+    setValue("cpf", normalizeCpfNumber(cpfValue));
+  }, [cpfValue, setValue]);
+
+  const onSubmit = async (data: FieldValues) => {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    router.push("/users");
+    reset();
+  };
   return (
     <div className="flex h-screen ">
       <div className="hidden lg:flex items-center lg:w-8/12 justify-center  h-full bg-white text-black ">
@@ -20,11 +62,46 @@ export default function Home() {
         </div>
       </div>
       <div className="flex-1 p-10 pt-20  lg:w-1/4 bg-white ">
-        <h1 className="text-4xl font-light text-gray-800 mb-6">
+        <h1 className="text-4xl font-light text-gray-700 mb-6">
           Lean cadastro
         </h1>
-        <div className="h-96"></div>
-        {/* <UserForm /> */}
+        <div className="h-96">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleSubmit(onSubmit)(e);
+            }}
+          >
+            <Field
+              name="nome"
+              errors={errors}
+              label="Nome completo"
+              register={register}
+            />
+            <Field
+              name="email"
+              errors={errors}
+              label="E-mail"
+              register={register}
+            />
+            <Field name="cpf" errors={errors} label="CPF" register={register} />
+            <Field
+              name="telefone"
+              errors={errors}
+              label="Telefone"
+              register={register}
+            />
+            <div className="w-full items-center flex flex-row">
+              <Button size="xl" loading={isSubmitting} type="submit">
+                Cadastrar
+              </Button>
+              <Button variant="link" size="lg" type="button">
+                Cadastrar
+                <Icon icon={ArrowRight} />
+              </Button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -2,10 +2,13 @@
 import { Button } from "@/components/Button";
 import Field from "@/components/Field";
 import Icon from "@/components/Icon";
+import useStorage from "@/hooks/useStorage";
 import { normalizeCpfNumber, normalizePhoneNumber } from "@/utils/masks";
 import { UserSchema } from "@/utils/shemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -26,6 +29,8 @@ export default function Home() {
 
   const router = useRouter();
 
+  const { saveUser } = useStorage();
+
   const phoneValue = watch("telefone");
   const cpfValue = watch("cpf");
 
@@ -38,11 +43,15 @@ export default function Home() {
   }, [cpfValue, setValue]);
 
   const onSubmit = async (data: FieldValues) => {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-
-    router.push("/users");
+    const response = saveUser(data);
+    if (!response.success) {
+      toast.error(response.message);
+      return;
+    }
     reset();
+    router.push("/users");
   };
+
   return (
     <div className="flex h-screen ">
       <div className="hidden lg:flex items-center lg:w-8/12 justify-center  h-full bg-white text-black ">
@@ -103,6 +112,7 @@ export default function Home() {
           </form>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

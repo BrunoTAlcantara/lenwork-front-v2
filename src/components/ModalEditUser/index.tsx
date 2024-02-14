@@ -6,14 +6,13 @@ import { UserProps, UserSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Edit2Icon } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
-
+import "react-toastify/dist/ReactToastify.css";
 import { useEffect, useState } from "react";
 import { useForm, FieldValues } from "react-hook-form";
 import { Modal } from "../ui/Modal";
 import useVisibilityControl from "@/hooks/useModal";
-import { useUserContext } from "@/context/userContext";
 
-import "react-toastify/dist/ReactToastify.css";
+import { useUserContext } from "@/context/userContext";
 
 function ModalEdit(user: UserProps) {
   const {
@@ -22,7 +21,7 @@ function ModalEdit(user: UserProps) {
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FieldValues>({
     resolver: zodResolver(UserSchema),
     defaultValues: {
@@ -57,10 +56,9 @@ function ModalEdit(user: UserProps) {
   const onSubmit = async (data: FieldValues) => {
     try {
       setIsLoading(true);
-
       setTimeout(async () => {
         if (!user.id) {
-          toast.error("Usúario não encontrado");
+          toast.error("Usuário não encontrado");
           return;
         }
         const response = editUser(user.id, data as UserProps);
@@ -69,12 +67,11 @@ function ModalEdit(user: UserProps) {
           return;
         }
         setIsLoading(false);
-        onClose();
-        reset();
       }, 2000);
     } catch (e) {
       setIsLoading(false);
     }
+    reset();
   };
 
   return (
@@ -92,8 +89,8 @@ function ModalEdit(user: UserProps) {
             }}
           >
             <Modal.Header
-              title="Editar usúario"
-              subTitle="Edit e depois envie os usuarios"
+              title="Editar usuário"
+              subTitle="Após editar, clique em salvar"
               onClose={onClose}
             />
             <Modal.Content>

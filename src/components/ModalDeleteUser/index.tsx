@@ -15,6 +15,7 @@ function ModalDelete({ id, nome }: { id: string; nome: string }) {
   const { deleteUser } = useUserContext();
   const { onClose, isOpen, toggleVisibility, onOpen } = useVisibilityControl();
   const [isLoading, setIsLoading] = useState(false);
+  console.log(isOpen);
 
   const handleDelete = async (data: FieldValues) => {
     try {
@@ -22,7 +23,7 @@ function ModalDelete({ id, nome }: { id: string; nome: string }) {
 
       setTimeout(async () => {
         if (!id) {
-          toast.error("Usúario não encontrado");
+          toast.error("Usuário não encontrado");
           return;
         }
         const response = deleteUser(id);
@@ -31,7 +32,6 @@ function ModalDelete({ id, nome }: { id: string; nome: string }) {
           return;
         }
         setIsLoading(false);
-        onClose();
       }, 2000);
     } catch (e) {
       setIsLoading(false);

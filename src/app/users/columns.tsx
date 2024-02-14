@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/Button";
-import ModalEdit from "@/components/EditUser";
+import ModalEdit from "@/components/ModalEditUser";
 import { cpfFormat, telFormat } from "@/utils/formatters";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-import ModalDelete from "@/components/DeleteUser";
+import ModalDelete from "@/components/ModalDeleteUser";
 
 export type Users = {
   active?: boolean;

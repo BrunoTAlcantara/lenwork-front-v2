@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, FieldValues } from "react-hook-form";
 import { useUserContext } from "@/context/userContext";
 import { Users } from "./users/columns";
@@ -31,6 +31,7 @@ export default function Home() {
   const router = useRouter();
 
   const { saveUser } = useUserContext();
+  const [isLoading, setIsLoading] = useState(false);
 
   const phoneValue = watch("telefone");
   const cpfValue = watch("cpf");
@@ -44,13 +45,22 @@ export default function Home() {
   }, [cpfValue, setValue]);
 
   const onSubmit = async (data: FieldValues) => {
-    const response = saveUser(data as Users);
-    if (!response.success) {
-      toast.error(response.message);
-      return;
-    }
-    reset();
-    router.push("/users");
+    setIsLoading(true);
+
+    setTimeout(async () => {
+      const response = saveUser(data as Users);
+
+      if (!response.success) {
+        toast.error(response.message);
+        return;
+      }
+
+      toast.success("Usuário criado com sucesso");
+
+      setIsLoading(false);
+      router.push("/users");
+      reset();
+    }, 2000);
   };
 
   return (
@@ -75,7 +85,7 @@ export default function Home() {
         <h1 className="text-4xl font-light text-gray-700 mb-6">
           Lean cadastro
         </h1>
-        <div className="h-96">
+        <div className="h-96 w-11/12  pr-30">
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -101,12 +111,12 @@ export default function Home() {
               label="Telefone"
               register={register}
             />
-            <div className="w-full items-center flex flex-row">
-              <Button size="xl" loading={isSubmitting} type="submit">
+            <div className="w-full items-center flex flex-col lg:flex-row">
+              <Button size="lg" loading={isLoading} type="submit">
                 Cadastrar
               </Button>
-              <Button variant="link" size="lg" type="button">
-                Cadastrar
+              <Button variant="link" size="md" type="button">
+                Login
                 <Icon icon={ArrowRight} />
               </Button>
             </div>

@@ -17,12 +17,11 @@
 - Removi os componentes shadcn/radix.
 - Criei novos componentes utilizando HTML semântico, Tailwind CSS e React.
 - Utilizei o Tailwind merge em alguns componentes, incluindo variantes.
-- Adotei ícones da biblioteca Lucide Icons para uma melhor experiência visual.
+- Reestruturei o projeto com apenas uma pasta de componentes para facilitar a leitura do código.
 
 ### Correções
 - Corrigi textos e palavras erradas utilizando o codeSpellChecker ("Obrigado pela dica!").
 - Removi imports não utilizados.
-- Reestruturei o projeto com apenas uma pasta de componentes para facilitar a leitura do código.
 - Ajustei o componente de Ícone para receber um ElementType.
 - Agora o input preenche toda a tela.
 

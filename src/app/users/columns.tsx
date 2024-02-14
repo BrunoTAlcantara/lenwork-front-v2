@@ -1,12 +1,10 @@
 "use client";
-
-import { Button } from "@/components/Button";
-// import { Button } from "@/components/ui/button";
-import { cpfFormater, telFormater } from "@/utils/formaters";
+import { Button } from "@/components/ui/Button";
+import ModalEdit from "@/components/EditUser";
+import { cpfFormat, telFormat } from "@/utils/formatters";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
-// import { PopoverDeleteUser } from "./components/delete-user";
-// import { EditModal } from "./components/edit-modal";
+import ModalDelete from "@/components/DeleteUser";
 
 export type Users = {
   active?: boolean;
@@ -49,33 +47,42 @@ export const columns: ColumnDef<Users>[] = [
   },
   {
     accessorKey: "cpf",
-    header: () => <div>CPF</div>,
+    header: () => <div className="text-sm">CPF</div>,
     cell: ({ row }) => {
       const cpfData: string = row.getValue("cpf");
-
-      return <div>{cpfFormater(cpfData)}</div>;
+      return <div>{cpfFormat(cpfData)}</div>;
     },
   },
   {
     accessorKey: "telefone",
-    header: () => <div>Telefone</div>,
+    header: () => <div className="text-sm">Telefone</div>,
     cell: ({ row }) => {
       const telData: string = row.getValue("telefone");
 
-      return <div>{telFormater(telData)}</div>;
+      return <div>{telFormat(telData)}</div>;
     },
   },
   {
     accessorKey: "id",
     header: () => <div className="hidden">id</div>,
-    cell: ({ row }) => {
+    cell: () => {
       return <div className="hidden">id</div>;
     },
   },
   {
-    accessorKey: "açoes",
-
-    header: "Ações",
-    cell: ({ row }) => <div className="flex gap-4"></div>,
+    accessorKey: "ações",
+    header: () => <div className="text-sm">Ações</div>,
+    cell: ({ row }) => (
+      <div className="flex gap-4">
+        <ModalEdit
+          id={row.getValue("id")}
+          cpf={row.getValue("cpf")}
+          nome={row.getValue("nome")}
+          email={row.getValue("email")}
+          telefone={row.getValue("telefone")}
+        />
+        <ModalDelete id={row.getValue("id")} nome={row.getValue("nome")} />
+      </div>
+    ),
   },
 ];

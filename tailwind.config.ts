@@ -22,7 +22,7 @@ const config: Config = {
         danger: "#E7484B",
       },
       backgroundColor: {
-        default: "#ffffff", // Defina a cor de fundo padrão como branco
+        default: "#ffffff",
       },
     },
   },

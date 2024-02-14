@@ -1,4 +1,15 @@
-export const LoadingSpinner = ({ className }: { className?: string }) => {
+import React from "react";
+import { twMerge } from "tailwind-merge";
+
+interface LoadingSpinnerProps {
+  className?: string;
+}
+
+export const LoadingSpinner: React.FC<LoadingSpinnerProps> = ({
+  className,
+}) => {
+  const svgClasses = twMerge("animate-spin text-white", className);
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,7 +21,7 @@ export const LoadingSpinner = ({ className }: { className?: string }) => {
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={"animate-spin text-white"}
+      className={svgClasses}
     >
       <path d="M21 12a9 9 0 1 1-6.219-8.56" />
     </svg>

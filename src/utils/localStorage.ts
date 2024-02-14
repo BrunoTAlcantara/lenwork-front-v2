@@ -1,6 +1,6 @@
 "use client";
 import { v4 as uuidv4 } from "uuid";
-import { UserProps } from "@/utils/shemas";
+import { UserProps } from "@/utils/schemas";
 
 export function saveUserLocalStorage(user: UserProps): {
   success: boolean;
@@ -46,24 +46,73 @@ export function getAllUsers(): UserProps[] {
   return userListJSON ? JSON.parse(userListJSON) : [];
 }
 
-export function deleteUserById(userId: string): string {
+export function editUserLocalStorage(
+  userId: string,
+  updatedUser: UserProps
+): {
+  success: boolean;
+  message: string;
+} {
   try {
-    let userList: UserProps[] = JSON.parse(
-      localStorage.getItem("users") || "[]"
-    );
+    const userList: UserProps[] = getAllUsers();
 
-    const userIndex = userList.findIndex((user) => user.id === userId);
+    const existingUserIndex = userList.findIndex((user) => user.id === userId);
 
-    if (userIndex !== -1) {
-      userList.splice(userIndex, 1);
-
-      localStorage.setItem("users", JSON.stringify(userList));
-
-      return "Usuário excluído com sucesso";
-    } else {
-      return "Usuário não encontrado";
+    if (existingUserIndex === -1) {
+      return {
+        success: false,
+        message: "Usuário não encontrado",
+      };
     }
+    const existingUser = userList[existingUserIndex];
+    const now = new Date();
+    const updatedUserData = {
+      ...existingUser,
+      ...updatedUser,
+      updatedAt: now,
+    };
+
+    userList[existingUserIndex] = updatedUserData;
+    localStorage.setItem("users", JSON.stringify(userList));
+
+    return {
+      success: true,
+      message: "Usuário atualizado com sucesso",
+    };
   } catch (error) {
-    return "Erro ao excluir usuário";
+    return {
+      success: false,
+      message: "Erro ao atualizar usuário",
+    };
+  }
+}
+
+export function deleteUserLocalStorage(userId: string): {
+  success: boolean;
+  message: string;
+} {
+  try {
+    const userList: UserProps[] = getAllUsers();
+
+    const updatedUserList = userList.filter((user) => user.id !== userId);
+
+    if (updatedUserList.length === userList.length) {
+      return {
+        success: false,
+        message: "Usuário não encontrado",
+      };
+    }
+
+    localStorage.setItem("users", JSON.stringify(updatedUserList));
+
+    return {
+      success: true,
+      message: "Usuário excluído com sucesso",
+    };
+  } catch (error) {
+    return {
+      success: false,
+      message: "Erro ao excluir usuário",
+    };
   }
 }

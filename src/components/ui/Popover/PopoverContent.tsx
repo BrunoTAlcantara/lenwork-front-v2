@@ -6,7 +6,7 @@ interface PopoverContentProps {
 }
 
 function PopoverContent({ children }: PopoverContentProps) {
-  return <div className="h-full p-4 mb-[10px]">{children}</div>;
+  return <div className="h-full p-4 ">{children}</div>;
 }
 
 export default PopoverContent;

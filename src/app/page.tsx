@@ -1,10 +1,9 @@
 "use client";
-import { Button } from "@/components/Button";
+import { Button } from "@/components/ui/Button";
 import Field from "@/components/Field";
-import Icon from "@/components/Icon";
-import useStorage from "@/hooks/useStorage";
+import Icon from "@/components/ui/Icon";
 import { normalizeCpfNumber, normalizePhoneNumber } from "@/utils/masks";
-import { UserSchema } from "@/utils/shemas";
+import { UserSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
@@ -14,6 +13,8 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useForm, FieldValues } from "react-hook-form";
+import { useUserContext } from "@/context/userContext";
+import { Users } from "./users/columns";
 
 export default function Home() {
   const {
@@ -29,7 +30,7 @@ export default function Home() {
 
   const router = useRouter();
 
-  const { saveUser } = useStorage();
+  const { saveUser } = useUserContext();
 
   const phoneValue = watch("telefone");
   const cpfValue = watch("cpf");
@@ -43,7 +44,7 @@ export default function Home() {
   }, [cpfValue, setValue]);
 
   const onSubmit = async (data: FieldValues) => {
-    const response = saveUser(data);
+    const response = saveUser(data as Users);
     if (!response.success) {
       toast.error(response.message);
       return;

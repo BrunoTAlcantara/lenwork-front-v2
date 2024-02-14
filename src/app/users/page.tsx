@@ -1,16 +1,21 @@
 "use client";
 
-0;
+import { CheckCheck, UserPlus, Users2 } from "lucide-react";
+import { Button } from "@/components/ui/Button";
+import { Indicators } from "@/components/Indicators";
 import { useRouter } from "next/navigation";
-import { User } from "lucide-react";
-import { Button } from "@/components/Button";
-import { Indicators } from "@/components/indicators";
-import { DataTable } from "./tableUser";
+
 import { columns } from "./columns";
-import useStorage from "@/hooks/useStorage";
+import { TableUser } from "@/components/TableUser";
+import { useMemo } from "react";
+import { useUserContext } from "@/context/userContext";
 
 export default function Users() {
-  const { users } = useStorage();
+  const { users, getIndicators, loading } = useUserContext();
+  const data = useMemo(() => users, [users]);
+  const dataIndicators = useMemo(() => getIndicators(), [getIndicators]);
+  const router = useRouter();
+
   return (
     <section className="py-14 bg-white h-screen text-black">
       <div className="container  items-center">
@@ -19,19 +24,34 @@ export default function Users() {
             <h1 className="mb-4 text-2xl md:text-4xl font-extrabold">
               Usuários
             </h1>
-            <Button className="mb-5" size="md">
+            <Button className="mb-5" onClick={() => router.push("/")} size="md">
               Adicionar usuário
             </Button>
           </div>
 
           <div>
             <div className="flex flex-col gap-3 md:flex-row md:justify-between md:gap-8 mb-6">
-              <Indicators title="Total de usúarios" icon={User} indicator={0} />
-              <Indicators title="Novos usúarios" icon={User} indicator={0} />
-              <Indicators title="Usúarios ativos" icon={User} indicator={0} />
+              <Indicators
+                loading={loading}
+                title="Total de usuários"
+                icon={Users2}
+                indicator={dataIndicators.total}
+              />
+              <Indicators
+                loading={loading}
+                title="Novos usuários"
+                icon={UserPlus}
+                indicator={dataIndicators.today}
+              />
+              <Indicators
+                loading={loading}
+                title="Usuários ativos"
+                icon={CheckCheck}
+                indicator={dataIndicators.active}
+              />
             </div>
             <div>
-              <DataTable columns={columns} data={users} />
+              <TableUser columns={columns} data={data} />
             </div>
           </div>
         </div>

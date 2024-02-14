@@ -1,6 +1,4 @@
 import React, { ReactNode } from "react";
-import { XCircle } from "lucide-react";
-import { Content } from "next/font/google";
 
 type ModalContentProps = {
   children: ReactNode;

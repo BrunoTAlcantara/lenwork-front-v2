@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 export interface InputProps {
   children: ReactNode;
-  className: string;
+  className?: string;
 }
 
 const InputRoot = ({ children, className }: InputProps) => {

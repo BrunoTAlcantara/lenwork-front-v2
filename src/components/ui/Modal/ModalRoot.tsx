@@ -1,15 +1,15 @@
-"use client";
-import { ReactNode, useEffect } from "react";
+import { ReactNode } from "react";
+import { motion } from "framer-motion";
 
 import { twMerge } from "tailwind-merge";
 import { cva, type VariantProps } from "class-variance-authority";
-import { XCircle } from "lucide-react";
 
 const modal = cva(
   [
     "leading-none",
     "flex",
     "flex-col",
+    "min-w-72",
     "gap-5",
     "bg-white",
     "rounded-xl",
@@ -27,14 +27,9 @@ const modal = cva(
         lg: ["text-md", "py-2.5", "w-3/4", "px-5"],
         full: ["text-md", "py-3", "w-full", "px-6"],
       },
-      btnType: {
-        button: "",
-        icon: ["px-0", "rounded-full"],
-      },
     },
     defaultVariants: {
       size: "md",
-      btnType: "button",
     },
   }
 );
@@ -49,23 +44,27 @@ export default function ModalRoot({
   isOpen,
   toggleVisibility,
   children,
-  btnType,
   size,
 }: ModalProps) {
   return (
-    <div
+    <motion.div
       onClick={toggleVisibility}
-      className={`
-    fixed inset-0 flex justify-center items-center transition-all ease-in duration-300
-    ${isOpen ? "visible bg-gray-500 bg-opacity-70 " : "invisible"}
-  `}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: isOpen ? 1 : 0 }}
+      transition={{ duration: 0.3 }}
+      className={`fixed inset-0 flex justify-center backdrop-blur-sm bg-gray-300 items-center 0 bg-opacity-70 transition-opacity ease-in duration-300 ${
+        isOpen ? "visible" : "invisible"
+      }`}
     >
-      <div
+      <motion.div
         onClick={(e) => e.stopPropagation()}
-        className={twMerge(modal({ size, btnType }))}
+        className={twMerge(modal({ size }))}
+        initial={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        animate={{ opacity: 1 }}
       >
         {children}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }

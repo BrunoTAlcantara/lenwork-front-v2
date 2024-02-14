@@ -1,7 +1,7 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 import { cva, type VariantProps } from "class-variance-authority";
-import { LoadingSpinner } from "./Spinner";
+import { LoadingSpinner } from "../Spinner";
 
 const button = cva(
   [
@@ -70,6 +70,15 @@ const button = cva(
           "disabled:bg-[#f6f6f6]",
           "disabled:text-[#dddcdc]",
         ],
+        gray: [
+          "bg-gray-700",
+          "text-white",
+          "active:bg-gray-600",
+          "focus-visible:bg-gray-600",
+          "hover:bg-gray-400",
+          "disabled:bg-[#f6f6f6]",
+          "disabled:text-[#dddcdc]",
+        ],
       },
       size: {
         sm: ["text-sm", "py-3", "min-h-9", "px-3"],
@@ -83,10 +92,14 @@ const button = cva(
       },
     },
     compoundVariants: [
-      { btnType: "icon", size: "sm", class: "h-10 w-10" },
-      { btnType: "icon", size: "md", class: "h-11 w-11" },
-      { btnType: "icon", size: "lg", class: "h-12 w-12" },
-      { btnType: "icon", size: "xl", class: "h-[52px] w-[52px]" },
+      { btnType: "icon", size: "sm", class: "h-10 w-10  text-center" },
+      { btnType: "icon", size: "md", class: "h-11 w-11 text-center" },
+      { btnType: "icon", size: "lg", class: "h-20 w-20 text-center" },
+      {
+        btnType: "icon",
+        size: "xl",
+        class: "h-[52px] w-[52px] text-center flex align-middle items-center",
+      },
     ],
     defaultVariants: {
       variant: "primary",

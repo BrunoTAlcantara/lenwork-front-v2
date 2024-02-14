@@ -1,5 +1,5 @@
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
-import { Input } from "../Input";
+import { Input } from "../ui/Input";
 
 interface InputProps {
   label: string;

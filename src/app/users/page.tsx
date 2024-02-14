@@ -24,7 +24,7 @@ export default function Users() {
             <h1 className="mb-4 text-2xl md:text-4xl font-extrabold">
               Usuários
             </h1>
-            <Button className="mb-5" onClick={() => router.push("/")} size="lg">
+            <Button className="mb-5" onClick={() => router.push("/")} size="sm">
               Adicionar usuário
             </Button>
           </div>

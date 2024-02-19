@@ -23,7 +23,7 @@ export default function Home() {
     handleSubmit,
     setValue,
     reset,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<FieldValues>({
     resolver: zodResolver(UserSchema),
   });
@@ -52,6 +52,7 @@ export default function Home() {
 
       if (!response.success) {
         toast.error(response.message);
+        setIsLoading(false);
         return;
       }
 

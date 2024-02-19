@@ -75,7 +75,6 @@ export function TableUser<TData, TValue>({
       globalFilter: debounceSearch,
       columnVisibility,
     },
-
     onSortingChange: setSorting,
     onColumnVisibilityChange: setColumnVisibility,
     onColumnFiltersChange: setColumnFilters,
@@ -104,6 +103,7 @@ export function TableUser<TData, TValue>({
         >
           <Columns2 className="p-1" />
         </Button>
+
         <Popover.Root isOpen={isOpen} onClose={onClose}>
           <Popover.Content>
             <div className=" flex flex-col ">

@@ -7,15 +7,19 @@ import { useRouter } from "next/navigation";
 
 import { columns } from "./columns";
 import { TableUser } from "@/components/TableUser";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useUserContext } from "@/context/userContext";
 
 export default function Users() {
-  const { users, getIndicators, loading } = useUserContext();
+  const { users, getIndicators, loading: initialLoading } = useUserContext();
+  const [loading, setLoading] = useState(true);
   const data = useMemo(() => users, [users]);
   const dataIndicators = useMemo(() => getIndicators(), [getIndicators]);
   const router = useRouter();
 
+  useEffect(() => {
+    setLoading(initialLoading);
+  }, [initialLoading]);
   return (
     <section className="py-14 bg-white h-screen text-black">
       <div className="container  items-center">

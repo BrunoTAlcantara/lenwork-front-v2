@@ -51,7 +51,6 @@ const button = cva(
           "border-none",
           "disabled:text-[#dddcdc]",
         ],
-
         danger: [
           "bg-red-500",
           "text-white",

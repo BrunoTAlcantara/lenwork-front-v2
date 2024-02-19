@@ -15,7 +15,6 @@ function ModalDelete({ id, nome }: { id: string; nome: string }) {
   const { deleteUser } = useUserContext();
   const { onClose, isOpen, toggleVisibility, onOpen } = useVisibilityControl();
   const [isLoading, setIsLoading] = useState(false);
-  console.log(isOpen);
 
   const handleDelete = async (data: FieldValues) => {
     try {

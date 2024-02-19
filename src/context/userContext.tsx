@@ -75,7 +75,10 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
   const getIndicators = () => {
     const today = new Date();
 
-    const activeUsersToday = users.filter((user) => {
+    setIsLoading(true);
+    const storedUsers = getAllUsers();
+
+    const activeUsersToday = storedUsers.filter((user) => {
       if (user.createdAt) {
         const userCreatedAtStartOfDay = startOfDay(new Date(user.createdAt));
         return isEqual(userCreatedAtStartOfDay, startOfDay(today));
@@ -83,8 +86,12 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
       return false;
     });
 
+    console.log(activeUsersToday);
+
+    setIsLoading(false);
+
     const indicator = {
-      active: users.filter((user) => user.active === true).length,
+      active: storedUsers.filter((user) => user.active === true).length,
 
       today: activeUsersToday.length,
       total: users.length,

@@ -15,7 +15,7 @@ function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
   return (
     <div className="flex items-center text-black w-full justify-between px-2 my-4">
       <div className="flex-1 text-xs text-black md:text-sm   md:block">
-        {table.getFilteredRowModel().rows.length} linha(s) .
+        {table.getFilteredRowModel().rows.length} linha(s).
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">

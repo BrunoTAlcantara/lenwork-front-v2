@@ -75,29 +75,36 @@ export const UsersProvider = ({ children }: { children: ReactNode }) => {
   const getIndicators = () => {
     const today = new Date();
 
-    setIsLoading(true);
-    const storedUsers = getAllUsers();
+    if (typeof localStorage !== "undefined") {
+      setIsLoading(true);
+      const storedUsers = getAllUsers();
 
-    const activeUsersToday = storedUsers.filter((user) => {
-      if (user.createdAt) {
-        const userCreatedAtStartOfDay = startOfDay(new Date(user.createdAt));
-        return isEqual(userCreatedAtStartOfDay, startOfDay(today));
-      }
-      return false;
-    });
+      const activeUsersToday = storedUsers.filter((user) => {
+        if (user.createdAt) {
+          const userCreatedAtStartOfDay = startOfDay(new Date(user.createdAt));
+          return isEqual(userCreatedAtStartOfDay, startOfDay(today));
+        }
+        return false;
+      });
 
-    console.log(activeUsersToday);
+      console.log(activeUsersToday);
 
-    setIsLoading(false);
+      setIsLoading(false);
 
-    const indicator = {
-      active: storedUsers.filter((user) => user.active === true).length,
+      const indicator = {
+        active: storedUsers.filter((user) => user.active === true).length,
+        today: activeUsersToday.length,
+        total: users.length,
+      };
 
-      today: activeUsersToday.length,
-      total: users.length,
+      return indicator;
+    }
+
+    return {
+      today: 0,
+      total: 0,
+      active: 0,
     };
-
-    return indicator;
   };
 
   const editUser = (userId: string, updatedUser: UserProps): ResponseUser => {

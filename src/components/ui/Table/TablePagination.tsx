@@ -40,16 +40,16 @@ function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
         </div>
         <div className="flex items-center space-x-2">
           <Button
-            variant="outline"
+            variant="link"
             className="hidden h-8 w-8 p-0 lg:flex disabled:text-gray-500"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
             <span className="sr-only">Próxima página</span>
-            <ChevronsLeft className="h-4 w-4" />
+            <ChevronsLeft className="h-6 w-6" />
           </Button>
           <Button
-            variant="outline"
+            variant="link"
             className="h-8 w-8 p-0 disabled:text-gray-500"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -58,7 +58,7 @@ function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
             <ChevronLeft />
           </Button>
           <Button
-            variant="outline"
+            variant="link"
             className="h-8 w-8 p-0 disabled:text-gray-500"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
@@ -67,7 +67,7 @@ function TablePagination<TData>({ table }: TablePaginationProps<TData>) {
             <ChevronRight />
           </Button>
           <Button
-            variant="outline"
+            variant="link"
             className="hidden h-8 w-8 p-0 lg:flex disabled:text-gray-500"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}

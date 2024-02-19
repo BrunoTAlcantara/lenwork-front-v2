@@ -32,17 +32,6 @@ const button = cva(
           "disabled:bg-[#f6f6f6]",
           "disabled:text-[#dddcdc]",
         ],
-        outline: [
-          "bg-theme-base",
-          "text-theme-600",
-          "border-2",
-          "border-theme-600",
-          "hover:bg-theme-100",
-          "active:bg-theme-200",
-          "disabled:bg-theme-base",
-          "disabled:border-theme-200",
-          "disabled:text-theme-400",
-        ],
         link: [
           "text-black",
           "hover:text-black-700",
